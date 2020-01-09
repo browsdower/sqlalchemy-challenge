@@ -9,7 +9,6 @@ from sqlalchemy import create_engine, func
 import pandas as pd
 import numpy as np
 import datetime
-from climate_starter import *
 
 app = Flask(__name__)
 
