@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, jsonify
+from flask import Flask, jsonify
 
 #dependencies
 import sqlalchemy
@@ -16,8 +16,10 @@ engine = create_engine("sqlite:///hawaii.sqlite")
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 
-Measurements = Base.classes.measurements
-Stations = Base.classes.stations
+Measurement = Base.classes.measurement
+Station = Base.classes.station
+
+Base.classes.keys()
 
 session = Session(engine)
 
@@ -25,3 +27,6 @@ session = Session(engine)
 def home():
 	print("Server received request for 'Home' page.")
 	return "Hawaii Climate API"
+
+if __name__ == '__main__':
+    app.run(debug=True)
