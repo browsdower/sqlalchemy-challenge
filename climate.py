@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import datetime
 
-# from climate_stater import *
+from climate_starter.ipynb import *
 
 app = Flask(__name__)
 
@@ -52,7 +52,7 @@ def precipitation():
 @app.route("/api/v1.0/stations")
 def stations():
     """Return the json list of all stations in the data set"""
-    all_stations = session.query(Stations.station, Stations.name).all()
+    all_stations = session.query(Station.station, Station.name).all()
               
     stations_data = []
     for rec in range(len(all_stations)):
@@ -65,9 +65,9 @@ def stations():
 
 @app.route("/api/v1.0/tobs")
 def tobs():
-    recent_tobs = session.query(Measurements.date, Measurements.station, Measurements.tobs).\
-               filter(Measurements.date.between('2016-08-23', '2017-08-23')).\
-               group_by(Measurements.date).order_by(Measurements.date).all()
+    recent_tobs = session.query(Measurement.date, Measurement.station, Measurement.tobs).\
+               filter(Measurement.date.between('2016-08-23', '2017-08-23')).\
+               group_by(Measurement.date).order_by(Measurement.date).all()
 
    
     tobs_data = []
@@ -94,12 +94,12 @@ def temp_range(start):
 @app.route("/api/v1.0/<start>/<end_date>")
 def temp_ranges(start, end_date):
     
-    min_temp = session.query(func.min(Measurements.tobs)).\
-               filter(Measurements.date.between(start, end_date)).first()
-    avg_temp = session.query(func.avg(Measurements.tobs)).\
-               filter(Measurements.date.between(start, end_date)).first()
-    max_temp = session.query(func.max(Measurements.tobs)).\
-               filter(Measurements.date.between(start, end_date)).first()
+    min_temp = session.query(func.min(Measurement.tobs)).\
+               filter(Measurement.date.between(start, end_date)).first()
+    avg_temp = session.query(func.avg(Measurement.tobs)).\
+               filter(Measurement.date.between(start, end_date)).first()
+    max_temp = session.query(func.max(Measurement.tobs)).\
+               filter(Measurement.date.between(start, end_date)).first()
     
     date_data = [min_temp, avg_temp, max_temp]
     return jsonify(date_data)
