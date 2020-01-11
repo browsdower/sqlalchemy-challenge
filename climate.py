@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import datetime
 
-from climate_starter.ipynb import *
+from climate_starter import *
 
 app = Flask(__name__)
 
@@ -51,7 +51,6 @@ def precipitation():
 
 @app.route("/api/v1.0/stations")
 def stations():
-    """Return the json list of all stations in the data set"""
     all_stations = session.query(Station.station, Station.name).all()
               
     stations_data = []
